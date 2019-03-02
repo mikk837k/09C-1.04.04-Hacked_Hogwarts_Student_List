@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>09C-1.04.01-Student_List_1991-improved</title>
+    <link rel="stylesheet" href="studentlist.css" type="text/css" />
+  </head>
+  <body>
+    <div id="grid">
+      <div id="modal">
+        <div class="modal_content">
+          <h2 data-field="firstname"></h2>
+          <h2 data-field="lastname"></h2>
+          <img data-field="studentphoto" src="" alt="" />
+          <img data-field="housecrest" src="" alt="" />
+          <button data-action="inquisitorial_squad">Appoint to IS</button>
+        </div>
+      </div>
+      <h1>Students 1991</h1>
+      <div id="buttonWrapper">
+        <div class="dropdown">
+          <button class="dropbtn">Filter by</button>
+          <div class="dropdown-content">
+            <div data-action="all">All houses</div>
+            <div data-action="Gryffindor">Gryffindor</div>
+            <div data-action="Hufflepuff">Hufflepuff</div>
+            <div data-action="Ravenclaw">Ravenclaw</div>
+            <div data-action="Slytherin">Slytherin</div>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">Sort by</button>
+          <div class="dropdown-content">
+            <div class="sort_Button" data-action="remove">Remove sorting</div>
+            <div class="sort_Button" data-action="firstname">Firstname</div>
+            <div class="sort_Button" data-action="lastname">Lastname</div>
+            <div class="sort_Button" data-action="house">House</div>
+          </div>
+        </div>
+      </div>
+      <div class="counter">
+        <div>
+          <p data-field="allStudents"></p>
+          <p data-field="expelledStudent"></p>
+          <p data-field="Gryffindor"></p>
+          <p data-field="Hufflepuff"></p>
+          <p data-field="Ravenclaw"></p>
+          <p data-field="Slytherin"></p>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div id="data_student"></div>
+      <template id="data_template">
+        <h2 data-field="fullname"></h2>
+        <p data-field="house"></p>
+        <button data-action="expel">Expel Student</button>
+      </template>
+    </div>
+    <!-- <script src="studentlist.js"></script> -->
+    <script src="studentlist2.js"></script>
+  </body>
+</html>
