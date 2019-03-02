@@ -52,7 +52,11 @@ async function fetchStudentData() {
   );
   bloodStatus = await familiesData.json();
 
-  //   console.table(bloodStatus.pure);
+  const theChosenOne = {
+    fullname: "Mikkel Low Madsen",
+    house: "Gryffindor"
+  };
+  studentArray.push(theChosenOne);
 
   manipulateStudentData(studentArray, bloodStatus);
 }
@@ -65,10 +69,8 @@ function manipulateStudentData(studentArray) {
     studentlist.push(newStudent);
   });
   studentlist.forEach(object => {
-    object.uniqueID = uuidv4();
+    object.uniqueID = generateUniqueID();
   });
-
-  console.table(studentlist);
 
   countStudents();
   setBloodStatus();
@@ -94,9 +96,33 @@ function setBloodStatus() {
     }
   });
 
-  console.table(studentlist);
+  hackedBloodStatus();
+}
 
+function hackedBloodStatus() {
+  studentlist.forEach(object => {
+    if (object.blood_status === "Pure-blood") {
+      object.blood_status = "-blood-";
+    } else {
+      object.blood_status = "Pure-blood";
+    }
+  });
+  hackPureBloods();
+  console.table(studentlist);
   displayStudentList(studentlist);
+}
+
+function hackPureBloods() {
+  studentlist.forEach(object => {
+    if (object.blood_status === "-blood-") {
+      let randomBloodStatus = Math.random();
+      if (randomBloodStatus > 0.5) {
+        object.blood_status = "Muggle";
+      } else {
+        object.blood_status = "Half-blood";
+      }
+    }
+  });
 }
 
 function siteClicked(event) {
@@ -135,7 +161,7 @@ function siteClicked(event) {
   if (action === "inquisitorial_squad") {
     event.preventDefault();
     inquisitorialS = action;
-    getInquisitorialSquadCompatibility(event);
+    getISCompatibility(event);
   }
 }
 
@@ -174,17 +200,22 @@ function expelStudent(event) {
   //   console.log(studentID);
   const findIndex = studentlist.findIndex(obj => obj.uniqueID === studentID);
   const expelStudent = studentlist.find(obj => obj.uniqueID === studentID);
-  studentlist.splice(findIndex, 1);
 
-  expelStudent.expelled = "Expelled";
-  //   find object to push
-  studentlist_expelled.push(expelStudent);
+  if (expelStudent.fullname === "Mikkel Low Madsen") {
+    alert("NO CAN DO");
+  } else {
+    studentlist.splice(findIndex, 1);
+    expelStudent.expelled = "Expelled";
+    //   find object to push
+    studentlist_expelled.push(expelStudent);
+  }
+
   console.table(studentlist_expelled);
 
   filterList(chosenFilter);
 }
 
-function getInquisitorialSquadCompatibility(event) {
+function getISCompatibility(event) {
   const studentID = event.target.dataset.id;
 
   console.log(studentID);
@@ -196,13 +227,13 @@ function getInquisitorialSquadCompatibility(event) {
     appointStudent.blood_status === "Pure-blood" ||
     appointStudent.house === "Slytherin"
   ) {
-    appointToInquisitorialSquad(appointStudent);
+    appointToIS(appointStudent);
   } else {
     alert("Not Allowed!");
   }
 }
 
-function appointToInquisitorialSquad(appointStudent) {
+function appointToIS(appointStudent) {
   console.log("appointToIInquisitorialSquad");
   document.querySelector("[data-action=inquisitorial_squad]").textContent = "";
   if (appointStudent.inquisitorialSquad === false) {
@@ -214,6 +245,22 @@ function appointToInquisitorialSquad(appointStudent) {
     document.querySelector("[data-action=inquisitorial_squad]").textContent =
       "Appoint to IS";
   }
+  const randomTime = Math.round(Math.random() * (5000 - 1000) + 1000);
+  console.log(randomTime);
+  setTimeout(resetISStatus, randomTime, appointStudent);
+}
+
+function resetISStatus(appointStudent) {
+  console.log("resetISStatus");
+  if (appointStudent.inquisitorialSquad === true) {
+    appointStudent.inquisitorialSquad = false;
+    document.querySelector("[data-action=inquisitorial_squad]").textContent =
+      "";
+    document.querySelector("[data-action=inquisitorial_squad]").textContent =
+      "Appoint to IS";
+    // Some visuel effect
+  }
+  console.log(appointStudent);
 }
 
 // update counters
@@ -331,6 +378,12 @@ function openStudentDetails(student) {
   modal.querySelector("[data-field=firstname]").innerHTML = `Firstname: ${
     student.firstname
   }`;
+  modal.querySelector("[data-field=lastname]").innerHTML = `Lastname: ${
+    student.lastname
+  }`;
+  modal.querySelector("[data-field=blood_status]").innerHTML = `Blood Status: ${
+    student.blood_status
+  }`;
   modal.querySelector("button").dataset.id = student.uniqueID;
   modal.querySelector("div").addEventListener("click", closeStudentDetails);
 }
@@ -341,7 +394,7 @@ function closeStudentDetails() {
   document.querySelector(".modal_content").classList.remove(houseColor);
 }
 
-function uuidv4() {
+function generateUniqueID() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
     var r = (Math.random() * 16) | 0,
       v = c == "x" ? r : (r & 0x3) | 0x8;
