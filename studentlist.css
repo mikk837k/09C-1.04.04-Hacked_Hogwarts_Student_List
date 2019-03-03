@@ -1,29 +1,101 @@
+:root {
+  scroll-behavior: smooth;
+}
+/* font-family: "Mr De Haviland", cursive;
+font-family: "UnifrakturCook", cursive; */
+
 body {
   margin: 0;
   padding: 0;
+  background-color: rgb(34, 27, 12);
+  color: white;
 }
-.filterWrapper {
-  display: flex;
-  flex-direction: row;
+
+h1,
+h2,
+h3 {
+  font-size: 2em;
+  font-family: "UnifrakturCook", cursive;
 }
+
+p {
+  font-family: "Tangerine", cursive;
+  font-size: 2em;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+/* Basic Grid */
+
+#grid {
+  display: grid;
+  grid-template-columns: 5vw repeat(6, 1fr) 5vw;
+  grid-template-rows: 5vh auto 10vh 10vh 10vh auto 10vh;
+}
+
+/* Counter */
+
+.counter {
+  grid-column: 2 / span 2;
+  grid-row: 2;
+}
+
+.counter p {
+  margin: 20px 0;
+}
+
+/* Hogwarts crest */
+
+.hogwartsCrest {
+  justify-self: center;
+  align-self: center;
+  grid-column: 4 / span 2;
+  grid-row: 2;
+  width: 20vw;
+  height: 50vh;
+  display: grid;
+}
+
+.hogwartsCrest img {
+  justify-self: center;
+  height: 100%;
+}
+
+/* Headline */
+
+.headline {
+  grid-column: 3 / span 4;
+  grid-row: 3;
+  justify-self: center;
+  align-self: center;
+}
+
+/* Filter knapper og sortering */
 
 #buttonWrapper {
+  grid-column: 4 / span 2;
+  grid-row: 4;
+  justify-self: center;
   display: flex;
   flex-direction: row;
 }
 
-.filter_Button {
-  width: 100px;
-  height: 40px;
+.dropdown {
+  width: 200px;
+  height: 80px;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
+  width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  color: black;
 }
 
 .dropdown-content .filter_Button {
@@ -39,15 +111,72 @@ body {
 
 .dropdown:hover .dropdown-content {
   display: block;
+  cursor: pointer;
 }
 
 .dropdown:hover .dropbtn {
   background-color: #3e8e41;
+  /* cursor: pointer; */
 }
 
-/* body {
-    background-color: aliceblue;
-} */
+/* Studentlist */
+.studentlist_header {
+  grid-row: 5;
+  grid-column: 3 / span 4;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#studentlist {
+  grid-column: 3 / span 4;
+  background-color: rgb(114, 94, 50);
+  grid-row: 6;
+  display: grid;
+  padding: 0 20px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1vw 800px;
+  box-shadow: inset 0 0 10px #000000;
+  scroll-behavior: smooth;
+  overflow: scroll;
+  margin-top: 20px;
+}
+#data_student {
+  grid-column: 1 / span 3;
+  grid-row: 2;
+  cursor: pointer;
+  display: grid;
+  grid-row-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+}
+.student_name {
+  grid-column: 1;
+}
+
+.student_house {
+  grid-column: 3;
+  justify-self: left;
+}
+.expel_student {
+  grid-column: 4;
+  justify-self: center;
+}
+
+[data-field="fullname"] {
+  grid-column: 1 / span 2;
+}
+
+[data-action="expel"] {
+  align-self: center;
+  justify-self: center;
+  height: 40px;
+  width: 150px;
+  border-radius: 10px 50px;
+  border: 1px solid rgb(187, 0, 0);
+  background-image: radial-gradient(red, rgb(187, 0, 0), rgb(128, 0, 0));
+  box-shadow: 3px 2px 40px red;
+}
+
+/* House Colors */
 
 .gryffindor {
   background-color: #ce3a0a;
@@ -69,18 +198,187 @@ body {
   color: #c0b1c6;
 }
 
+/* Modal view */
+
 #modal {
+  grid-column: start / span end;
+  grid-row: start / span end;
   width: 100vw;
   height: 100vh;
   position: fixed;
-  background-color: rgb(248, 247, 247);
+  background-color: rgba(70, 68, 68, 0.5);
   opacity: 0;
   transition: 1s;
   pointer-events: none;
+  display: grid;
+  grid-template-columns: 30vw auto 30vw;
+  grid-template-rows: 10vh auto 20vh;
+}
+
+.modal_content {
+  justify-self: center;
+  margin: 0 10px;
+  grid-column: 2;
+  grid-row: 2;
+  width: 100%;
+  height: 70vh;
+  border-radius: 10px 50px;
+  display: grid;
+  grid-template-rows: 2vh auto 10vh 10vh 10vh 20px 42px 2vh;
+  grid-template-columns: 2vw 170px 130px 130px 130px 2vw;
+}
+
+.close {
+  justify-self: center;
+  margin-top: 2vh;
+  width: 20px;
+  height: 4px;
+  background-color: black;
+  grid-row: 2;
+  grid-column: 6;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.closeArea {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  grid-row: 2;
+  grid-column: 6;
+}
+
+.one {
+  transform: rotate(45deg);
+}
+
+.two {
+  transform: rotate(-45deg);
+}
+
+.modal_firstname {
+  grid-column: 2;
+  grid-row: 3;
+}
+.modal_lastname {
+  grid-column: 2;
+  grid-row: 4;
+}
+.modal_bloodstatus {
+  grid-column: 2 / span 2;
+  grid-row: 5;
+}
+
+[data-field="studentphoto"] {
+  grid-row: 2;
+  grid-column: 3 / span 2;
+  width: 180px;
+  justify-self: center;
+}
+
+[data-field="housecrest"] {
+  width: 100px;
+  grid-row: 2;
+  grid-column: 2;
+  justify-self: center;
+}
+
+[data-field="firstname"] {
+  grid-row: 3;
+  grid-column: 3 / span 2;
+}
+[data-field="lastname"] {
+  grid-row: 4;
+  grid-column: 3 / span 2;
+}
+
+[data-field="blood_status"] {
+  grid-row: 5;
+  grid-column: 3 / span 2;
+}
+
+[data-action="inquisitorial_squad"] {
+  grid-row: 7;
+  grid-column: 2 / span 4;
+  justify-self: center;
+  cursor: pointer;
+  height: 40px;
+  width: 150px;
+  border-radius: 10px 50px;
+  border: 1px solid #588c39;
+  background-image: radial-gradient(#588c39, #447429, #2a5810);
+  /* background-image: radial-gradient(red, rgb(187, 0, 0), rgb(128, 0, 0)); */
+  box-shadow: 3px 2px 40px rgb(31, 30, 30);
 }
 
 #modal.show {
   opacity: 1;
   transition: 0.5s;
   pointer-events: all;
+}
+
+/* Warning box */
+
+.warning_background {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  animation: flash linear 1s infinite;
+  z-index: 2;
+  background-color: rgba(253, 38, 0, 0.719);
+}
+.warning_box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: -150px;
+  width: 400px;
+  height: 300px;
+  background-color: rgb(34, 27, 12);
+  border-radius: 10px 50px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+}
+.warning_box h1 {
+  grid-row: 2;
+  grid-column: 3;
+  margin-top: 0;
+}
+.warning_box p {
+  margin: 0;
+  grid-row: 3;
+  grid-column: 2 / span 3;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+.hide {
+  display: none;
+}
+
+[data-action="close_warning"] {
+  grid-row: 5;
+  grid-column: 3;
+  justify-self: center;
+  cursor: pointer;
+  height: 40px;
+  width: 150px;
+  border-radius: 10px 50px;
+  border: 1px solid #588c39;
+  background-image: radial-gradient(#588c39, #447429, #2a5810);
+  /* background-image: radial-gradient(red, rgb(187, 0, 0), rgb(128, 0, 0)); */
+  box-shadow: 3px 2px 40px rgb(31, 30, 30);
 }

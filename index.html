@@ -4,21 +4,36 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>09C-1.04.01-Student_List_1991-improved</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Tangerine|UnifrakturCook:700"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="studentlist.css" type="text/css" />
   </head>
   <body>
     <div id="grid">
+      <div class="warning_background hide"></div>
+      <div class="warning_box hide">
+        <h1></h1>
+        <p></p>
+        <button data-action="close_warning">Accept</button>
+      </div>
       <div id="modal">
         <div class="modal_content">
-          <h2 data-field="firstname"></h2>
-          <h2 data-field="lastname"></h2>
-          <h2 data-field="blood_status"></h2>
+          <div class="close one"></div>
+          <div class="close two"></div>
+          <div class="closeArea"></div>
+          <h2 class="modal_firstname">Firstname:</h2>
+          <p data-field="firstname"></p>
+          <h2 class="modal_lastname">Lastname:</h2>
+          <p data-field="lastname"></p>
+          <h2 class="modal_bloodstatus">Blood status:</h2>
+          <p data-field="blood_status"></p>
           <img data-field="studentphoto" src="" alt="" />
           <img data-field="housecrest" src="" alt="" />
           <button data-action="inquisitorial_squad">Appoint to IS</button>
         </div>
       </div>
-      <h1>Students 1991</h1>
       <div id="buttonWrapper">
         <div class="dropdown">
           <button class="dropbtn">Filter by</button>
@@ -33,14 +48,15 @@
         <div class="dropdown">
           <button class="dropbtn">Sort by</button>
           <div class="dropdown-content">
-            <div class="sort_Button" data-action="remove">Remove sorting</div>
-            <div class="sort_Button" data-action="firstname">Firstname</div>
-            <div class="sort_Button" data-action="lastname">Lastname</div>
-            <div class="sort_Button" data-action="house">House</div>
+            <div data-action="remove">Remove sorting</div>
+            <div data-action="firstname">Firstname</div>
+            <div data-action="lastname">Lastname</div>
+            <div data-action="house">House</div>
           </div>
         </div>
       </div>
       <div class="counter">
+        <h2>Students of 1991</h2>
         <div>
           <p data-field="allStudents"></p>
           <p data-field="expelledStudent"></p>
@@ -49,16 +65,29 @@
           <p data-field="Ravenclaw"></p>
           <p data-field="Slytherin"></p>
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
       </div>
-      <div id="data_student"></div>
-      <template id="data_template">
-        <h2 data-field="fullname"></h2>
-        <p data-field="house"></p>
-        <button data-action="expel">Expel Student</button>
-      </template>
+      <div class="hogwartsCrest">
+        <img
+          src="img/HogwartsHouseCrest.png"
+          alt="The crest of Hogwarts School of wizardry and Witchcraft"
+        />
+      </div>
+      <div class="headline">
+        <h1>Hogwarts School of Witchcraft and Wizardry</h1>
+      </div>
+      <div class="studentlist_header">
+        <h2 class="student_name">Student name:</h2>
+        <h2 class="student_house">Student house:</h2>
+        <h2 class="expel_student">Expel student!</h2>
+      </div>
+      <div id="studentlist">
+        <div id="data_student"></div>
+        <template id="data_template">
+          <h2 data-field="fullname"></h2>
+          <p data-field="house"></p>
+          <button data-action="expel">Expel!</button>
+        </template>
+      </div>
     </div>
     <!-- <script src="studentlist.js"></script> -->
     <script src="studentlist2.js"></script>

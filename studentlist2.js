@@ -11,6 +11,7 @@ let expel = "";
 let action = "";
 let inquisitorialS = "";
 let bloodStatus;
+let houseColor;
 
 let destination = document.querySelector("#data_student");
 
@@ -202,7 +203,14 @@ function expelStudent(event) {
   const expelStudent = studentlist.find(obj => obj.uniqueID === studentID);
 
   if (expelStudent.fullname === "Mikkel Low Madsen") {
-    alert("NO CAN DO");
+    document.querySelector(".warning_background").classList.remove("hide");
+    document.querySelector(".warning_box").classList.remove("hide");
+    document.querySelector(".warning_box h1").textContent = "WARNING!";
+    document.querySelector(".warning_box p").textContent =
+      "Studant is undercover and can't be expelled!";
+    document
+      .querySelector("[data-action=close_warning]")
+      .addEventListener("click", hideWarningbox);
   } else {
     studentlist.splice(findIndex, 1);
     expelStudent.expelled = "Expelled";
@@ -229,8 +237,21 @@ function getISCompatibility(event) {
   ) {
     appointToIS(appointStudent);
   } else {
-    alert("Not Allowed!");
+    // alert("Not Allowed!");
+    document.querySelector(".warning_background").classList.remove("hide");
+    document.querySelector(".warning_box").classList.remove("hide");
+    document.querySelector(".warning_box h1").textContent = "WARNING!";
+    document.querySelector(".warning_box p").textContent =
+      "Studant cannot be appointed to the Inquisitorial Squad!";
+    document
+      .querySelector("[data-action=close_warning]")
+      .addEventListener("click", hideWarningbox);
   }
+}
+
+function hideWarningbox() {
+  document.querySelector(".warning_background").classList.add("hide");
+  document.querySelector(".warning_box").classList.add("hide");
 }
 
 function appointToIS(appointStudent) {
@@ -371,27 +392,43 @@ function displayStudent(student) {
 
 function openStudentDetails(student) {
   const modal = document.querySelector("#modal");
-  let houseColor;
   modal.classList.add("show");
   houseColor = student.house.toLowerCase();
+
+  console.log(houseColor);
   document.querySelector(".modal_content").classList.add(houseColor);
-  modal.querySelector("[data-field=firstname]").innerHTML = `Firstname: ${
-    student.firstname
-  }`;
-  modal.querySelector("[data-field=lastname]").innerHTML = `Lastname: ${
-    student.lastname
-  }`;
-  modal.querySelector("[data-field=blood_status]").innerHTML = `Blood Status: ${
-    student.blood_status
+  modal.querySelector("[data-field=firstname]").innerHTML = student.firstname;
+  modal.querySelector("[data-field=lastname]").innerHTML = student.lastname;
+  modal.querySelector("[data-field=blood_status]").innerHTML =
+    student.blood_status;
+  modal.querySelector("[data-field=studentphoto]").src = `${
+    student.imagename
+  }.png`;
+  modal.querySelector("[data-field=studentphoto]").alt = `Student photo of ${
+    student.fullname
+  } from the house ${student.house}`;
+
+  if (student.firstname === "Justin") {
+    modal.querySelector("[data-field=studentphoto]").src =
+      "images/fletchley_j.png";
+  }
+  if (student.lastname === "-unknown-") {
+    modal.querySelector("[data-field=studentphoto]").src = "images/unknown.png";
+  }
+
+  modal.querySelector("[data-field=housecrest]").src = `img/${houseColor}.png`;
+  modal.querySelector("[data-field=housecrest]").alt = `Crest of the house ${
+    student.house
   }`;
   modal.querySelector("button").dataset.id = student.uniqueID;
-  modal.querySelector("div").addEventListener("click", closeStudentDetails);
+  modal
+    .querySelector(".closeArea")
+    .addEventListener("click", closeStudentDetails);
 }
 
 function closeStudentDetails() {
-  modal.classList.remove("show");
-  let houseColor;
   document.querySelector(".modal_content").classList.remove(houseColor);
+  modal.classList.remove("show");
 }
 
 function generateUniqueID() {
